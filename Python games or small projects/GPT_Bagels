@@ -1,0 +1,75 @@
+import random
+
+while True:
+    numbers = list('1234567890')
+    random.shuffle(numbers)
+    MAX_GUESS = 5
+    secret = ''.join(numbers[:3])
+
+    attempts = 1
+
+    while attempts <= MAX_GUESS:
+        responses = []
+        print(f"Guess the secret number : {attempts} guesses")
+        user_guess = input('> ')
+
+        if len(user_guess) != len(secret) or not user_guess.isdecimal():
+            print(f"Here is a clue the secret is {len(secret)} numbers long")
+            continue  # This will skip the rest of the loop and prompt the user again
+
+        for u, s in zip(user_guess, secret):
+            if u == s:
+                responses.append('Fermi')
+            elif u in secret:
+                responses.append('Pico')
+            else:
+                responses.append('Bagels')
+
+        # Check if all responses are Fermi
+        if len(responses) == len(secret) and all(resp == 'Fermi' for resp in responses):
+            print(f"Congratulations you guessed the secret {secret}")
+            break
+
+        print(responses)
+        attempts += 1
+
+    if not input(f"The secret was {secret} \nWould you like to play again ? (Yes(y) or No(n) > ").lower().startswith('y'):
+        break
+
+🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+The `zip` function returns an iterator of tuples, where the first item in each passed iterator is paired together, and then the second item in each passed iterator is paired together, and so forth. If the passed iterators are of different lengths, `zip` stops creating tuples when the shortest input iterable is exhausted.
+
+Let's look at some examples to understand how `zip` works:
+
+1. **Zipping Two Lists Together**:
+   ```python
+   a = [1, 2, 3]
+   b = ['a', 'b', 'c']
+   result = list(zip(a, b))
+   print(result)  # Output: [(1, 'a'), (2, 'b'), (3, 'c')]
+   ```
+
+2. **Zipping Lists of Different Lengths**:
+   ```python
+   a = [1, 2, 3]
+   b = ['a', 'b']
+   result = list(zip(a, b))
+   print(result)  # Output: [(1, 'a'), (2, 'b')]
+   ```
+
+   As you can see, the third element of list `a` (`3`) isn't present in the result because list `b` doesn't have a corresponding element.
+
+3. **Unzipping Using Zip**:
+   You can use the `zip` function with the `*` operator to unzip a list of tuples.
+   ```python
+   zipped = [(1, 'a'), (2, 'b'), (3, 'c')]
+   a, b = zip(*zipped)
+   print(a)  # Output: (1, 2, 3)
+   print(b)  # Output: ('a', 'b', 'c')
+   ```
+
+In your code, the line:
+```python
+for u, s in zip(user_guess, secret):
+```
+will iterate over the characters in `user_guess` and `secret` simultaneously. For example, if `user_guess` is `'123'` and `secret` is `'456'`, on the first iteration, `u` will be `'1'` and `s` will be `'4'`; on the second iteration, `u` will be `'2'` and `s` will be `'5'`; and so on. This makes it easy to compare the digits at the same positions in the two strings.

@@ -1,8 +1,15 @@
-MAX_GUESS = 3
-secret = str(100)
-user_guess = ''
-attempts = 1
+import random
+
 while True:
+    numbers = list('1234567890')
+    random.shuffle(numbers)
+    MAX_GUESS = 5
+    secret = '981'
+    user_guess = ''
+    # for i in range(3):
+    #     secret += numbers[i]
+    # print(secret)
+    attempts = 1
     while attempts <= MAX_GUESS:
         responses = []
         print(f"Guess the secret number : {attempts} guesses")
@@ -14,17 +21,23 @@ while True:
                 print(f"Congratulations you guessed the secret {secret}")
                 break
             else:
-                for i in user_guess:
-                    if i in secret:
-                        if user_guess.index(i) == secret.index(i):
-                            responses.append('Fermi')
-                        else:
-                            responses.append('Pico')
+                for i in range(len(secret)):
+                    if user_guess[i] == secret[i]:
+                        responses.append('Fermi')
+                    elif user_guess[i] in secret:
+                        responses.append('Pico')
                     else:
                         responses.append('Bagels')
+                    # if i in secret:
+                    #     if user_guess.index(i) == secret.index(i):
+                    #         responses.append('Fermi')
+                    #     else:
+                    #         responses.append('Pico')
+                    # else:
+                    #     responses.append('Bagels')
                 print(responses)
             attempts += 1
-    if not input("Would you like to play again ? (Yes(y) or No(n) > ").lower().startswith('y'):
+    if not input(f"The secret was {secret} \nWould you like to play again ? (Yes(y) or No(n) > ").lower().startswith('y'):
         break
 
 
