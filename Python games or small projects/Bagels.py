@@ -1,17 +1,28 @@
 MAX_GUESS = 3
 secret = str(100)
+user_guess = ''
+attempts = 1
 while True:
-    user_guess = ''
-    attempts = 1
     while attempts <= MAX_GUESS:
+        responses = []
         print(f"Guess the secret number : {attempts} guesses")
         user_guess = input('> ')
-        if len(user_guess) < len(secret) or not user_guess.isdecimal():
+        if len(user_guess) < len(secret) or not user_guess.isdecimal() or len(user_guess) > len(secret):
             print(f"Here is a clue the secret is {len(secret)} numbers long")
         else:
             if user_guess == secret:
                 print(f"Congratulations you guessed the secret {secret}")
                 break
+            else:
+                for i in user_guess:
+                    if i in secret:
+                        if user_guess.index(i) == secret.index(i):
+                            responses.append('Fermi')
+                        else:
+                            responses.append('Pico')
+                    else:
+                        responses.append('Bagels')
+                print(responses)
             attempts += 1
     if not input("Would you like to play again ? (Yes(y) or No(n) > ").lower().startswith('y'):
         break
